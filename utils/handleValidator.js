@@ -6,6 +6,7 @@ const validateResults = (req, res, next) => {
         validationResult(req).throw()
         return next()
     } catch(err){
+        console.log(err)
         handleHttpError(res, 'VALIDATE_RESULTS_ERROR')
     }
 }

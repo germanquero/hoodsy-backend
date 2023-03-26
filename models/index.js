@@ -1,5 +1,7 @@
 const models = {
-  usersModel: require("./nosql/users"),
+  adminsModel: require("./nosql/admins"),
+  merchantsModel: require("./nosql/merchants"),
+  pagesModel: require("./nosql/pages"),
 };
 
 module.exports = models;

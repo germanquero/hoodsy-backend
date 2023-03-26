@@ -1,27 +1,27 @@
 const { handleHttpError } = require("../utils/handleHttpError");
 const { verifyToken } = require("../utils/handleJwt");
-const { usersModel } = require("../models");
+const { adminsModel } = require("../models");
 
-const authMiddleware = async (req, res, next) => {
+const adminsAuthMiddleware = async (req, res, next) => {
   try {
     if (!req.headers.authorization) {
       handleHttpError(res, "NOT_TOKEN", 401);
-      return
+      return;
     }
-
     const token = req.headers.authorization.split(' ').pop()
     const dataToken = await verifyToken(token)
     if(!dataToken._id){
-        handleHttpError(res, 'ERROR_ID_TOKEN', 401)
+        handleHttpError(res, 'ERROR_ID_TOKEN', 401);
+        return;
     }
 
-    const user = await usersModel.findById(dataToken._id)
-    req.user = user
+    const admin = await adminsModel.findById(dataToken._id)
+    req.admin = admin
     next()
   } catch (err) {
-    
-    handleHttpError(res, "NOT_SESSION", 401);
+    handleHttpError(res, "NOT_ADMIN_SESSION", 401);
+    return;
   }
 };
 
-module.exports = authMiddleware
+module.exports = adminsAuthMiddleware
