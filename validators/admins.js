@@ -1,7 +1,17 @@
 const { check } = require("express-validator");
 const validateResults = require("../utils/handleValidator");
 
-const validatorCreateAdmin = [
+// Este validador funciona para merchants y admins,
+// en los casos de busqueda actualizacion y borrado
+const validatorGetById = [
+  check("id").exists().isMongoId().trim(),
+  (req, res, next) => {
+    return validateResults(req, res, next);
+  },
+];
+
+// Validador para la creacion y edicion de Admins
+const validatorAdmin = [
   check("forename").exists().notEmpty().trim(),
   check("surname").exists().notEmpty().trim(),
   check("email").exists().notEmpty().isEmail().trim(),
@@ -22,28 +32,8 @@ const validatorRegisterMerchant = [
   },
 ];
 
-module.exports = { validatorCreateAdmin, validatorRegisterMerchant };
-
-// forename: {
-//     type: String,
-//     required: true,
-//     trim: true,
-// },
-// surname: {
-//     type: String,
-//     required: true,
-//     trim: true,
-// },
-// email: {
-//     type: String,
-//     required: true,
-//     unique: true,
-//     trim: true,
-//     lowercase: true,
-// },
-// phoneNumber: {
-//     type: String,
-//     required: true,
-//     unique: true,
-//     trim: true,
-// },
+module.exports = {
+  validatorAdmin,
+  validatorGetById,
+  validatorRegisterMerchant,
+};
