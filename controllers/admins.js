@@ -3,6 +3,20 @@ const { handleHttpError } = require("../utils/handleHttpError");
 const { adminsModel, merchantsModel, pagesModel } = require("../models");
 const { tokenAdminSign, tokenMerchantSign } = require("../utils/handleJwt");
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 // Admins
 
 // router.post("/", adminsAuthMiddleware, validatorAdmin, createAdmin);
@@ -67,8 +81,9 @@ const deleteAdmin = async (req, res) => {
 const editAdmin = async (req, res) => {
   try {
     const { id, ...body } = matchedData(req);
-    const admin = await adminsModel.findByIdAndUpdate(id, body);
-    const updatedAdmin = await adminsModel.findById(id);
+    const updatedAdmin = await adminsModel.findByIdAndUpdate(id, body, {
+      new: true,
+    });
     const data = {
       token: await tokenAdminSign(updatedAdmin),
       admin: updatedAdmin,
@@ -90,7 +105,12 @@ const editAdmin = async (req, res) => {
 //
 //
 //
+//
+//
+
 // Merchants
+
+// router.post("/merchants", adminsAuthMiddleware, validatorRegisterMerchant, registerMerchant);
 const registerMerchant = async (req, res) => {
   try {
     const body = matchedData(req);
@@ -113,14 +133,16 @@ const registerMerchant = async (req, res) => {
   }
 };
 
+// router.put("/merchants/:id", adminsAuthMiddleware, validatorGetById, validatorRegisterMerchant, editMerchant);
 const editMerchant = async (req, res) => {
   try {
     const { id, ...body } = matchedData(req);
-    const dataMerchant = await merchantsModel.findByIdAndUpdate(id, body);
-    const newMerchant = await merchantsModel.findById(id);
+    const dataMerchant = await merchantsModel.findByIdAndUpdate(id, body, {
+      new: true,
+    });
     const data = {
-      token: await tokenMerchantSign(newMerchant),
-      merchant: newMerchant,
+      token: await tokenMerchantSign(dataMerchant),
+      merchant: dataMerchant,
     };
     res.send(data);
   } catch (err) {
@@ -128,25 +150,38 @@ const editMerchant = async (req, res) => {
   }
 };
 
+// router.get("/merchants", adminsAuthMiddleware, getMerchants);
 const getMerchants = async (req, res) => {
   try {
-    const data = await merchantsModel.find({});
+    const dataMerchants = await merchantsModel.find({});
+    const data = await Promise.all(
+      dataMerchants.map(async (merchant) => {
+        const token = await tokenAdminSign(merchant);
+        return { ...merchant.toObject(), token };
+      })
+    );
     res.send(data);
   } catch (err) {
     handleHttpError(res, "ERROR_GET_MERCHANTS");
   }
 };
 
+// router.get("/merchants/:id", adminsAuthMiddleware, validatorGetById, getMerchant);
 const getMerchant = async (req, res) => {
   try {
     const { id } = matchedData(req);
-    const data = await merchantsModel.findById(id);
-    res.send(data);
+    const dataMerchant = await merchantsModel.findById(id);
+    const data = {
+      token: await tokenMerchantSign(dataMerchant),
+      merchant: dataMerchant,
+    };
+    re.send(data)
   } catch (err) {
     handleHttpError(res, "ERROR_GET_MERCHANT");
   }
 };
 
+// router.delete("/merchants/:id", adminsAuthMiddleware, validatorGetById, deleteMerchant);
 const deleteMerchant = async (req, res) => {
   try {
     const { id } = matchedData(req);

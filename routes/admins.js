@@ -19,14 +19,28 @@ const {
 } = require("../validators/admins");
 const adminsAuthMiddleware = require("../middleware/adminAuth");
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 // Tabla de admins
-// Crear, obetener todos, obtener por id, editar por id y destruir por id
-router.post("/", adminsAuthMiddleware, validatorAdmin, createAdmin);
-router.get("/", adminsAuthMiddleware, getAdmins);
-router.get("/:id", adminsAuthMiddleware, validatorGetById, getAdmin);
-router.delete("/", adminsAuthMiddleware, validatorGetById, deleteAdmin);
+// Crear, obetener todos, obtener por id, destruir por id y editar por id
+router.post("/admins", adminsAuthMiddleware, validatorAdmin, createAdmin);
+router.get("/admins", adminsAuthMiddleware, getAdmins);
+router.get("/admins/:id", adminsAuthMiddleware, validatorGetById, getAdmin);
+router.delete("/admins", adminsAuthMiddleware, validatorGetById, deleteAdmin);
 router.put(
-  "/:id",
+  "/admins/:id",
   adminsAuthMiddleware,
   validatorGetById,
   validatorAdmin,
@@ -46,22 +60,22 @@ router.put(
 //
 //
 //
+
 // Tabla Merchants y Pages
+// Registrar, editar por id, obtener todos, obtener por id y borrar por id
 router.post(
   "/merchants",
   adminsAuthMiddleware,
   validatorRegisterMerchant,
   registerMerchant
 );
-
-router.put(
+router.patch(
   "/merchants/:id",
   adminsAuthMiddleware,
   validatorGetById,
   validatorRegisterMerchant,
   editMerchant
 );
-
 router.get("/merchants", adminsAuthMiddleware, getMerchants);
 router.get(
   "/merchants/:id",
@@ -69,7 +83,6 @@ router.get(
   validatorGetById,
   getMerchant
 );
-
 router.delete(
   "/merchants/:id",
   adminsAuthMiddleware,

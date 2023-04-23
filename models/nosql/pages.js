@@ -3,6 +3,10 @@ const mongooseDelete = require("mongoose-delete");
 
 const PagesSchema = new mongoose.Schema(
   {
+    published: {
+      type: Boolean,
+      default: false,
+    },
     location: {
       type: String,
       required: true,

@@ -1,20 +1,13 @@
 const { check } = require("express-validator");
 const validateResults = require("../utils/handleValidator");
 
-const validatorGetPage = [
-  check("id").exists().isMongoId().trim(),
+const validatorAddTexts = [
+  check("texts").exists().isArray(),
+  check("texts.*").exists().trim(),
   (req, res, next) => {
     return validateResults(req, res, next);
   },
 ];
-
-const validatorAddTexts = [
-    check("texts").exists().isArray(),
-    check("texts.*").exists().trim(),
-    (req, res, next) => {
-        return validateResults(req, res, next);
-      },
-]
 
 const validatorEditPage = [
   check("location").exists().trim(),
@@ -26,7 +19,7 @@ const validatorEditPage = [
   },
 ];
 
-module.exports = { validatorGetPage, validatorEditPage, validatorAddTexts };
+module.exports = { validatorEditPage, validatorAddTexts };
 
 // {
 //     location: {
