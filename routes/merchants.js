@@ -10,13 +10,18 @@ const {
   editPage,
   addTexts,
   removeTexts,
+  uploadPhoto,
+  getPicture,
+  deletePhoto,
 } = require("../controllers/merchants");
 const merchantsAuthMiddleware = require("../middleware/merchantsAuth");
 const {
   validatorEditPage,
   validatorAddTexts,
+  validatorGetPicture,
 } = require("../validators/merchants");
 const { validatorRegisterMerchant } = require("../validators/admins");
+const uploadMiddleware = require("../utils/handleStorage");
 
 //
 //
@@ -57,6 +62,7 @@ router.get("/page", merchantsAuthMiddleware, getPage);
 router.post("/page/publish", merchantsAuthMiddleware, postPage);
 router.delete("/page/publish", merchantsAuthMiddleware, removePage);
 router.patch("/page", merchantsAuthMiddleware, validatorEditPage, editPage);
+// textos
 router.post(
   "/page/texts",
   merchantsAuthMiddleware,
@@ -69,5 +75,18 @@ router.delete(
   validatorAddTexts,
   removeTexts
 );
-
+// Imagenes
+router.post(
+  "/page/photos",
+  merchantsAuthMiddleware,
+  uploadMiddleware.single("image"),
+  uploadPhoto
+);
+router.get("/page/photos/:filename", validatorGetPicture, getPicture);
+router.delete(
+  "/page/photos/:filename",
+  merchantsAuthMiddleware,
+  validatorGetPicture,
+  deletePhoto
+);
 module.exports = router;

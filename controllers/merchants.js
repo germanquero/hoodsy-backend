@@ -2,6 +2,9 @@ const { matchedData } = require("express-validator");
 const { merchantsModel, pagesModel } = require("../models");
 const { handleHttpError } = require("../utils/handleHttpError");
 const { tokenMerchantSign } = require("../utils/handleJwt");
+const fs = require("fs");
+const PUBLIC_URL = process.env.PUBLIC_URL;
+const MEDIA_PATH = __dirname + "/../storage";
 
 //
 //
@@ -181,6 +184,62 @@ const removeTexts = async (req, res) => {
   }
 };
 
+const uploadPhoto = async (req, res) => {
+  try {
+    const id = req.merchant.page;
+    const { file } = req;
+    const url =
+      process.env.PUBLIC_URL + "/merchants/page/photos/" + file.filename;
+    const dataPage = await pagesModel.findById(id);
+    const updatedPictures = [...dataPage.pictures, url];
+    const updatedPage = await pagesModel.findByIdAndUpdate(
+      id,
+      { pictures: updatedPictures },
+      { new: true }
+    );
+    res.send(updatedPage);
+  } catch (err) {
+    handleHttpError(res, "ERROR_UPLOAD_PHOTO");
+  }
+};
+
+const getPicture = async (req, res) => {
+  try {
+    const filename = matchedData(req).filename;
+    const filePath = MEDIA_PATH + "/" + filename;
+    res.set("Content-Type", "image/jpeg");
+    res.set("Content-Disposition", "inline");
+    const stream = fs.createReadStream(filePath);
+    stream.pipe(res);
+  } catch (err) {
+    handleHttpError(res, "ERROR_GET_PICTURE");
+  }
+};
+
+const deletePhoto = async (req, res) => {
+  try {
+    const id = req.merchant.page;
+    const filename = matchedData(req).filename;
+    const filePath = MEDIA_PATH + "/" + filename;
+    fs.unlinkSync(filePath);
+    const url =
+      process.env.PUBLIC_URL + "/merchants/page/photos/" + filename;
+    const dataPage = await pagesModel.findById(id);
+    const updatedPictures = dataPage.pictures.filter(
+      (pictureUrl) => pictureUrl !== url
+    );
+    const updatedPage = await pagesModel.findByIdAndUpdate(
+      id,
+      { pictures: updatedPictures },
+      { new: true }
+    );
+    res.send(updatedPage);
+  } catch (err) {
+    console.log(err);
+    handleHttpError(res, "ERROR_DELETE_PHOTO");
+  }
+};
+
 module.exports = {
   getInfo,
   editInfo,
@@ -191,4 +250,7 @@ module.exports = {
   editPage,
   addTexts,
   removeTexts,
+  uploadPhoto,
+  getPicture,
+  deletePhoto,
 };

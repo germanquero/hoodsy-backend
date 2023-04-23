@@ -19,7 +19,14 @@ const validatorEditPage = [
   },
 ];
 
-module.exports = { validatorEditPage, validatorAddTexts };
+const validatorGetPicture = [
+  check("filename").exists().trim(),
+  (req, res, next) => {
+    return validateResults(req, res, next);
+  },
+]
+
+module.exports = { validatorEditPage, validatorAddTexts, validatorGetPicture };
 
 // {
 //     location: {
