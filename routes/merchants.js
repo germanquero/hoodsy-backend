@@ -11,15 +11,14 @@ const {
   addTexts,
   removeTexts,
   uploadPhoto,
-  getPicture,
   deletePhoto,
 } = require("../controllers/merchants");
 const merchantsAuthMiddleware = require("../middleware/merchantsAuth");
 const {
   validatorEditPage,
   validatorAddTexts,
-  validatorGetPicture,
 } = require("../validators/merchants");
+const { validatorGetPicture } = require("../validators");
 const { validatorRegisterMerchant } = require("../validators/admins");
 const uploadMiddleware = require("../utils/handleStorage");
 
@@ -82,7 +81,6 @@ router.post(
   uploadMiddleware.single("image"),
   uploadPhoto
 );
-router.get("/page/photos/:filename", validatorGetPicture, getPicture);
 router.delete(
   "/page/photos/:filename",
   merchantsAuthMiddleware,

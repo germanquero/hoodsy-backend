@@ -4,25 +4,30 @@ const tokenAdminSign = async (admin) => {
   const sign = jwt.sign(
     {
       _id: admin._id,
-      forename: admin.forename,
-      surename: admin.surename,
-      email: admin.email,
-      phoneNumber: admin.phoneNumber,
     },
     process.env.JWT_SECRET
   );
   return sign;
 };
 
+const tokenUserSign = async (user) => {
+  const sign = jwt.sign(
+    {
+      _id: user._id,
+      role: user.role
+  },
+  process.env.JWT_SECRET,
+  {
+      expiresIn: "12h"
+  }
+  );
+  return sign;
+}
+
 const tokenMerchantSign = async (merchant) => {
   const sign = jwt.sign(
     {
       _id: merchant._id,
-      name: merchant.name,
-      cif: merchant.cif,
-      address: merchant.address,
-      phoneNumber: merchant.phoneNumber,
-      page: merchant.page,
     },
     process.env.JWT_SECRET
   );
@@ -37,4 +42,4 @@ const verifyToken = async (tokenJwt) => {
   }
 };
 
-module.exports = { tokenAdminSign, tokenMerchantSign, verifyToken };
+module.exports = { tokenAdminSign, tokenUserSign, tokenMerchantSign, verifyToken };

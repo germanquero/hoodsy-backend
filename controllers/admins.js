@@ -175,7 +175,7 @@ const getMerchant = async (req, res) => {
       token: await tokenMerchantSign(dataMerchant),
       merchant: dataMerchant,
     };
-    re.send(data)
+    res.send(data)
   } catch (err) {
     handleHttpError(res, "ERROR_GET_MERCHANT");
   }

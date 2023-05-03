@@ -56,9 +56,8 @@ const editInfo = async (req, res) => {
 // router.delete("/", merchantsAuthMiddleware, deleteMerchant);
 const deleteMerchant = async (req, res) => {
   try {
-    const id = req.merchant.id;
-    const merchantDeleted = await merchantsModel.findById(id);
-    const merchantData = await merchantsModel.delete({ _id: id });
+    const merchantDeleted = req.merchant;
+    const merchantData = await merchantsModel.delete({ _id: merchantDeleted.id });
     const pageData = await pagesModel.delete({ _id: merchantDeleted.page });
     const data = {
       merchant: merchantData,
@@ -189,7 +188,7 @@ const uploadPhoto = async (req, res) => {
     const id = req.merchant.page;
     const { file } = req;
     const url =
-      process.env.PUBLIC_URL + "/merchants/page/photos/" + file.filename;
+      PUBLIC_URL + "/webpages/photos/" + file.filename;
     const dataPage = await pagesModel.findById(id);
     const updatedPictures = [...dataPage.pictures, url];
     const updatedPage = await pagesModel.findByIdAndUpdate(
