@@ -1,35 +1,25 @@
 const jwt = require("jsonwebtoken");
 
-const tokenAdminSign = async (admin) => {
+const infiniteTokenSign = async (user) => {
   const sign = jwt.sign(
     {
-      _id: admin._id,
+      _id: user._id,
     },
     process.env.JWT_SECRET
   );
   return sign;
 };
 
-const tokenUserSign = async (user) => {
+const temporalTokenSign = async (user) => {
   const sign = jwt.sign(
     {
       _id: user._id,
-      role: user.role
-  },
-  process.env.JWT_SECRET,
-  {
-      expiresIn: "12h"
-  }
-  );
-  return sign;
-}
-
-const tokenMerchantSign = async (merchant) => {
-  const sign = jwt.sign(
-    {
-      _id: merchant._id,
+      role: user.role,
     },
-    process.env.JWT_SECRET
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "12h",
+    }
   );
   return sign;
 };
@@ -42,4 +32,4 @@ const verifyToken = async (tokenJwt) => {
   }
 };
 
-module.exports = { tokenAdminSign, tokenUserSign, tokenMerchantSign, verifyToken };
+module.exports = { infiniteTokenSign, temporalTokenSign, verifyToken };
