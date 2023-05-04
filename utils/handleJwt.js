@@ -1,5 +1,33 @@
 const jwt = require("jsonwebtoken");
 
+const verifyForgotPasswordTokenSign = async (email) => {
+  const sign = jwt.sign(
+    {
+      email: email,
+      change: process.env.PASS_SECRET,
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "1h",
+    }
+  );
+  return sign;
+};
+
+const verifyChangesTokenSign = async (user) => {
+  const sign = jwt.sign(
+    {
+      _id: user._id,
+      change: process.env.PASS_SECRET,
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "1h",
+    }
+  );
+  return sign;
+};
+
 const infiniteTokenSign = async (user) => {
   const sign = jwt.sign(
     {
@@ -14,7 +42,6 @@ const temporalTokenSign = async (user) => {
   const sign = jwt.sign(
     {
       _id: user._id,
-      role: user.role,
     },
     process.env.JWT_SECRET,
     {
@@ -32,4 +59,10 @@ const verifyToken = async (tokenJwt) => {
   }
 };
 
-module.exports = { infiniteTokenSign, temporalTokenSign, verifyToken };
+module.exports = {
+  verifyForgotPasswordTokenSign,
+  verifyChangesTokenSign,
+  infiniteTokenSign,
+  temporalTokenSign,
+  verifyToken,
+};
