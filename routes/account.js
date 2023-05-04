@@ -6,8 +6,13 @@ const {
   deleteAccount,
   verifyPasswordChange,
   passwordChange,
+  changeEmail,
 } = require("../controllers/account");
-const { validatorPassword, validatorInfo } = require("../validators/users");
+const {
+  validatorEmail,
+  validatorPassword,
+  validatorInfo,
+} = require("../validators/users");
 const router = express.Router();
 
 router.get("/", usersAuthMiddleware, getAccount);
@@ -19,6 +24,13 @@ router.post(
   usersAuthMiddleware,
   validatorPassword,
   passwordChange
+);
+router.post(
+  "/change-email",
+  usersAuthMiddleware,
+  validatorEmail,
+  validatorPassword,
+  changeEmail
 );
 
 module.exports = router;
