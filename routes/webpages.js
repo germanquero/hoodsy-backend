@@ -1,5 +1,21 @@
 const express = require("express");
-const { usersAuthMiddleware } = require("../middleware/authMiddleware");
+const {
+  usersAuthMiddleware,
+  merchantsAuthMiddleware,
+} = require("../middleware/authMiddleware");
+const { validatorPage, validatorTexts, validatorReview } = require("../validators/pages");
+const {
+  publishPage,
+  deletePage,
+  editPage,
+  postPhoto,
+  deletePhoto,
+  postTexts,
+  deleteTexts,
+  getPages,
+  getPicture,
+  postReview,
+} = require("../controllers/pages");
 const router = express.Router();
 
 router.post("/", merchantsAuthMiddleware, publishPage);
@@ -12,7 +28,6 @@ router.delete("/texts", merchantsAuthMiddleware, validatorTexts, deleteTexts);
 
 router.get("/", getPages);
 router.get("/photos/:filename", getPicture);
-
 
 router.post("/:id", usersAuthMiddleware, validatorReview, postReview);
 

@@ -1,6 +1,6 @@
 const { handleHttpError } = require("../utils/handleHttpError");
 const { verifyToken } = require("../utils/handleJwt");
-const { userModel, adminModel } = require("../models");
+const { userModel, adminModel, merchantModel } = require("../models");
 
 const authMiddleware =
   (model, errorMessage, objectName) => async (req, res, next) => {
@@ -37,7 +37,13 @@ const adminsAuthMiddleware = authMiddleware(
   "admin"
 );
 
-module.exports = { usersAuthMiddleware, adminsAuthMiddleware };
+const merchantsAuthMiddleware = authMiddleware(
+  merchantModel,
+  "NOT_ADMIN_SESSION",
+  "merchant"
+);
+
+module.exports = { usersAuthMiddleware, adminsAuthMiddleware, merchantsAuthMiddleware };
 
 
 //   const adminsAuthMiddleware = authMiddleware(adminsModel, "NOT_ADMIN_SESSION", "admin");
