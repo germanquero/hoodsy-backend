@@ -13,7 +13,7 @@ const getAccount = async (req, res) => {
     res.send(user);
   } catch (err) {
     console.log(err);
-    handleHttpError(res, "ERROR_GET_ACCOUNT");
+    handleHttpError(res, err, "ERROR_GET_ACCOUNT");
   }
 };
 
@@ -27,7 +27,7 @@ const editAccount = async (req, res) => {
     res.send("OK");
   } catch (err) {
     console.log(err);
-    handleHttpError(res, "ERROR_EDIT_ACCOUNT");
+    handleHttpError(res, err, "ERROR_EDIT_ACCOUNT");
   }
 };
 
@@ -44,7 +44,7 @@ const deleteAccount = async (req, res) => {
     res.send("OK");
   } catch (err) {
     console.log(err);
-    handleHttpError(res, "ERROR_DELETE_ACCOUNT");
+    handleHttpError(res, err, "ERROR_DELETE_ACCOUNT");
   }
 };
 
@@ -56,7 +56,7 @@ const verifyPasswordChange = async (req, res) => {
     res.send(url);
   } catch (err) {
     console.log(err);
-    handleHttpError(res, "ERROR_VERIFY_PASSWORD_CHANGE");
+    handleHttpError(res, err, "ERROR_VERIFY_PASSWORD_CHANGE");
   }
 };
 
@@ -78,7 +78,7 @@ const passwordChange = async (req, res) => {
     res.send("OK");
   } catch (err) {
     console.log(err);
-    handleHttpError(res, "ERROR_PASSWORD_CHANGE");
+    handleHttpError(res, err, "ERROR_PASSWORD_CHANGE");
   }
 };
 
@@ -95,7 +95,7 @@ const changeEmail = async (req, res) => {
     res.send("OK");
   } catch (err) {
     console.log(err);
-    handleHttpError(res, "ERROR_CHANGE_EMAIL");
+    handleHttpError(res, err, "ERROR_CHANGE_EMAIL");
   }
 };
 

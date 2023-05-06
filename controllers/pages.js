@@ -63,7 +63,7 @@ const deletePhoto = async (req, res) => {
     const path = MEDIA_PATH + "/" + filename;
     fs.unlinkSync(path);
     const url = PUBLIC_URL + "/webpages/photos/" + filename;
-    const page = await pageModel.findById(id);
+    const page = await pageModel.findById(merchant.page);
     const picturesArray = page.pictures.filter(
       (pictureUrl) => pictureUrl !== url
     );
@@ -73,7 +73,7 @@ const deletePhoto = async (req, res) => {
     res.send("OK");
   } catch (err) {
     console.log(err);
-    handleHttpError(res, "ERROR_DELETE_PHOTO");
+    handleHttpError(res, err, "ERROR_DELETE_PHOTO");
   }
 };
 
@@ -82,14 +82,14 @@ const postTexts = async (req, res) => {
     const merchant = req.merchant;
     const body = matchedData(req);
     const page = await pageModel.findById(merchant.page);
-    const textsArray = [...page.pictures, ...body.texts];
+    const textsArray = [...page.texts, ...body.texts];
     await pageModel.findByIdAndUpdate(merchant.page, {
       texts: textsArray,
     });
     res.send("OK");
   } catch (err) {
     console.log(err);
-    handleHttpError(res, "ERROR_POST_TEXTS");
+    handleHttpError(res, err, "ERROR_POST_TEXTS");
   }
 };
 
@@ -105,22 +105,22 @@ const deleteTexts = async (req, res) => {
     res.send("OK");
   } catch (err) {
     console.log(err);
-    handleHttpError(res, "ERROR_DELETE_TEXTS");
+    handleHttpError(res, err, "ERROR_DELETE_TEXTS");
   }
 };
 
 const getPages = async (req, res) => {
   try {
     const id = req.query.id;
-    const location = req.query.location;
+    const city = req.query.city;
     const activity = req.query.activity;
     const scoring = req.query.scoring;
     const filter = {};
     if (id) {
       filter._id = id;
     }
-    if (location) {
-      filter.location = location;
+    if (city) {
+      filter.city = city;
     }
     if (activity) {
       filter.activity = activity;
@@ -133,7 +133,7 @@ const getPages = async (req, res) => {
     res.send(pages);
   } catch (err) {
     console.log(err);
-    handleHttpError(res, "ERROR_");
+    handleHttpError(res, err, "ERROR_GET_PAGES");
   }
 };
 
@@ -146,15 +146,52 @@ const getPicture = async (req, res) => {
     const stream = fs.createReadStream(filePath);
     stream.pipe(res);
   } catch (err) {
-    handleHttpError(res, "ERROR_GET_PICTURE");
+    handleHttpError(res, err, "ERROR_GET_PICTURE");
   }
 };
 
 const postReview = async (req, res) => {
   try {
+    const id = req.params.id;
+    const user = req.user;
+    const body = matchedData(req);
+    const user_review = {
+      user_id: user.id,
+      score: body.score,
+      review: body.review,
+    };
+    const page = await pageModel.findById(id);
+    let reviewsArray = page.reviews.filter(
+      (review) => review.user_id != user.id
+    );
+    reviewsArray = [...reviewsArray, user_review];
+    const numReviews = reviewsArray.length;
+    let scoring = 0;
+    reviewsArray.forEach((review)=> scoring=+review.score);
+    await pageModel.findByIdAndUpdate(id, { reviews: reviewsArray, scoring: scoring, numReviews: numReviews });
+    res.send("OK");
   } catch (err) {
     console.log(err);
-    handleHttpError(res, "ERROR_");
+    handleHttpError(res, err, "ERROR_POST_REVIEW");
+  }
+};
+
+const deleteReview = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const user = req.user;
+    const page = await pageModel.findById(id);
+    const reviewsArray = page.reviews.filter(
+      (review) => review.user_id != user.id
+    );
+    const numReviews = reviewsArray.length;
+    let scoring = 0;
+    reviewsArray.forEach((review)=> scoring=+review.score);
+    await pageModel.findByIdAndUpdate(id, { reviews: reviewsArray, scoring: scoring, numReviews: numReviews });
+    res.send("OK");
+  } catch (err) {
+    console.log(err);
+    handleHttpError(res, err, "ERROR_DELETE_REVIEW");
   }
 };
 
@@ -169,4 +206,5 @@ module.exports = {
   getPages,
   getPicture,
   postReview,
+  deleteReview,
 };

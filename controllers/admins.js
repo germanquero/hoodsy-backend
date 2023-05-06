@@ -11,7 +11,7 @@ const createAdmin = async (req, res) => {
     res.send(token);
   } catch (err) {
     console.log(err);
-    handleHttpError(res, "ERROR_CREATE_ADMIN");
+    handleHttpError(res, err, "ERROR_CREATE_ADMIN");
   }
 };
 
@@ -21,7 +21,7 @@ const getAdmins = async (req, res) => {
     res.send(dataAdmins);
   } catch (err) {
     console.log(err);
-    handleHttpError(res, "ERROR_GET_ADMINS");
+    handleHttpError(res, err, "ERROR_GET_ADMINS");
   }
 };
 
@@ -36,7 +36,7 @@ const getAdmin = async (req, res) => {
     res.send(data);
   } catch (err) {
     console.log(err);
-    handleHttpError(res, "ERROR_GET_ADMIN");
+    handleHttpError(res, err, "ERROR_GET_ADMIN");
   }
 };
 
@@ -48,7 +48,7 @@ const editAdmin = async (req, res) => {
     res.send("OK");
   } catch (err) {
     console.log(err);
-    handleHttpError(res, "ERROR_EDIT_ADMIN");
+    handleHttpError(res, err, "ERROR_EDIT_ADMIN");
   }
 };
 
@@ -59,7 +59,7 @@ const deleteAdmin = async (req, res) => {
     res.send("OK");
   } catch (err) {
     console.log(err);
-    handleHttpError(res, "ERROR_DELETE_ADMIN");
+    handleHttpError(res, err, "ERROR_DELETE_ADMIN");
   }
 };
 

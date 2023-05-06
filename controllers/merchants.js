@@ -20,7 +20,7 @@ const createMerchant = async (req, res) => {
     res.send(token);
   } catch (err) {
     console.log(err);
-    handleHttpError(res, "ERROR_CREATE_MERCHANT");
+    handleHttpError(res, err, "ERROR_CREATE_MERCHANT");
   }
 };
 const getMerchants = async (req, res) => {
@@ -29,7 +29,7 @@ const getMerchants = async (req, res) => {
     res.send(dataMerchants);
   } catch (err) {
     console.log(err);
-    handleHttpError(res, "ERROR_GET_MERCHANTS");
+    handleHttpError(res, err, "ERROR_GET_MERCHANTS");
   }
 };
 const getMerchant = async (req, res) => {
@@ -43,7 +43,7 @@ const getMerchant = async (req, res) => {
     res.send(data);
   } catch (err) {
     console.log(err);
-    handleHttpError(res, "ERROR_GET_MERCHANT");
+    handleHttpError(res, err, "ERROR_GET_MERCHANT");
   }
 };
 const editMerchant = async (req, res) => {
@@ -54,7 +54,7 @@ const editMerchant = async (req, res) => {
     res.send("OK");
   } catch (err) {
     console.log(err);
-    handleHttpError(res, "ERROR_EDIT_MERCHANT");
+    handleHttpError(res, err, "ERROR_EDIT_MERCHANT");
   }
 };
 const deleteMerchant = async (req, res) => {
@@ -66,7 +66,7 @@ const deleteMerchant = async (req, res) => {
     res.send("OK");
   } catch (err) {
     console.log(err);
-    handleHttpError(res, "ERROR_DELETE_MERCHANT");
+    handleHttpError(res, err, "ERROR_DELETE_MERCHANT");
   }
 };
 

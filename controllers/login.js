@@ -13,7 +13,7 @@ const registerUser = async (req, res) => {
     res.send("OK");
   } catch (err) {
     console.log(err);
-    handleHttpError(res, "ERROR_REGISTER_USER");
+    handleHttpError(res, err, "ERROR_REGISTER_USER");
   }
 };
 
@@ -34,7 +34,7 @@ const loginUser = async (req, res) => {
     res.send(token);
   } catch (err) {
     console.log(err);
-    handleHttpError(res, "ERROR_LOGIN_USER");
+    handleHttpError(res, err, "ERROR_LOGIN_USER");
   }
 };
 
@@ -50,7 +50,7 @@ const forgotPassword = async(req, res) => {
     res.send(url);
   } catch(err) {
     console.log(err);
-    handleHttpError(res, "ERROR_FORGOT_PASSWORD");
+    handleHttpError(res, err, "ERROR_FORGOT_PASSWORD");
   }
 }
 
@@ -67,7 +67,7 @@ const changeForgotPassword = async(req, res) => {
 
   } catch(err) {
     console.log(err);
-    handleHttpError(res, "ERROR_CHANGE_FORGOT_PASSWORD");
+    handleHttpError(res, err, "ERROR_CHANGE_FORGOT_PASSWORD");
   }
 }
 

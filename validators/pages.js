@@ -2,12 +2,11 @@ const { check } = require("express-validator");
 const validateResults = require("../utils/handleValidator");
 
 const validatorPage = [
-  check("name").exists().notEmpty().trim(),
-  check("cif").exists().notEmpty().trim(),
-  check("address").exists().notEmpty().trim(),
   check("city").exists().notEmpty().trim(),
-  check("email").exists().notEmpty().isEmail().trim(),
-  check("phoneNumber").exists().notEmpty().isMobilePhone().trim(),
+  check("location").exists().notEmpty().trim(),
+  check("activity").exists().notEmpty().trim(),
+  check("title").exists().notEmpty().trim(),
+  check("summary").exists().notEmpty().trim(),
   (req, res, next) => {
     return validateResults(req, res, next);
   },
@@ -15,15 +14,15 @@ const validatorPage = [
 
 const validatorTexts = [
   check("texts").exists().isArray(),
-  check("texts.*").trim(),
+  check("texts.*").exists().trim(),
   (req, res, next) => {
     return validateResults(req, res, next);
   },
 ];
 
 const validatorReview = [
-    check("texts").exists().isArray(),
-    check("texts.*").trim(),
+    check("score").exists().isFloat({ min: 0, max: 5 }),
+    check("review").exists().notEmpty().trim(),
     (req, res, next) => {
       return validateResults(req, res, next);
     },
