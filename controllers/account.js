@@ -6,6 +6,12 @@ const { verifyChangesTokenSign } = require("../utils/handleJwt");
 const { verifyToken } = require("../utils/handleJwt");
 const { findByIdAndUpdate } = require("../models/nosql/users");
 
+
+/**
+ * Gets account info
+ * @param {*} req 
+ * @param {*} res 
+ */
 const getAccount = async (req, res) => {
   try {
     const user = req.user;
@@ -17,6 +23,11 @@ const getAccount = async (req, res) => {
   }
 };
 
+/**
+ * Edits account info
+ * @param {*} req 
+ * @param {*} res 
+ */
 const editAccount = async (req, res) => {
   try {
     const user = req.user;
@@ -31,6 +42,11 @@ const editAccount = async (req, res) => {
   }
 };
 
+/**
+ * Deletes account info
+ * @param {*} req 
+ * @param {*} res 
+ */
 const deleteAccount = async (req, res) => {
   try {
     const user = req.user;
@@ -48,6 +64,11 @@ const deleteAccount = async (req, res) => {
   }
 };
 
+/**
+ * Sends temporary link for password change
+ * @param {*} req 
+ * @param {*} res 
+ */
 const verifyPasswordChange = async (req, res) => {
   try {
     const user = req.user;
@@ -60,6 +81,11 @@ const verifyPasswordChange = async (req, res) => {
   }
 };
 
+/**
+ * Handles temporary link for password change
+ * @param {*} req 
+ * @param {*} res 
+ */
 const passwordChange = async (req, res) => {
   try {
     const user = req.user;
@@ -82,6 +108,11 @@ const passwordChange = async (req, res) => {
   }
 };
 
+/**
+ * Changes email
+ * @param {*} req 
+ * @param {*} res 
+ */
 const changeEmail = async (req, res) => {
   try {
     const user = req.user;

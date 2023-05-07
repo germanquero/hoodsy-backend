@@ -13,13 +13,11 @@ const UserSchema = new mongoose.Schema(
       unique: true,
       trim: true,
       required: true,
-      select: false,
     },
     password: {
       type: String,
       trim: true,
       required: true,
-      select: false,
     },
     age: {
       type: Number,
