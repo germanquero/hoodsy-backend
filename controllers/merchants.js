@@ -70,10 +70,49 @@ const deleteMerchant = async (req, res) => {
   }
 };
 
+const getAccount = async (req, res) => {
+  try {
+    const id = req.merchant.id;
+    const merchant = await merchantModel.findById(id);
+    res.send(merchant);
+  } catch (err) {
+    console.log(err);
+    handleHttpError(res, err, "ERROR_GET_MERCHANT");
+  }
+};
+
+const editAccount = async (req, res) => {
+  try {
+    const id = req.merchant.id;
+    const body = matchedData(req);
+    await merchantModel.findByIdAndUpdate(id, body);
+    res.send("OK");
+  } catch (err) {
+    console.log(err);
+    handleHttpError(res, err, "ERROR_EDIT_MERCHANT");
+  }
+};
+
+const deleteAccount = async (req, res) => {
+  try {
+    const id = req.merchant.id;
+    const merchant = await merchantModel.findById(id);
+    await pageModel.deleteOne({ _id: merchant.page });
+    await merchantModel.deleteOne(merchant);
+    res.send("OK");
+  } catch (err) {
+    console.log(err);
+    handleHttpError(res, err, "ERROR_DELETE_MERCHANT");
+  }
+};
+
 module.exports = {
   createMerchant,
   getMerchants,
   getMerchant,
   editMerchant,
   deleteMerchant,
+  getAccount,
+  editAccount,
+  deleteAccount
 };

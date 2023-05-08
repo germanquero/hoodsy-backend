@@ -53,7 +53,7 @@ const options = {
               type: "array",
               example: ["Fast food", "Comedy Shows", "Concerts"],
             },
-            allowReceivingOffers: {
+            allowsReceivingOffers: {
               type: "boolean",
               example: false,
             },
@@ -93,7 +93,7 @@ const options = {
               type: "array",
               example: ["Fast food", "Comedy Shows", "Concerts"],
             },
-            allowReceivingOffers: {
+            allowsReceivingOffers: {
               type: "boolean",
               example: false,
             },
@@ -110,15 +110,15 @@ const options = {
           },
         },
         email: {
-            type: "object",
-            required: ["email"],
-            properties: {
-              password: {
-                type: "string",
-                example: "menganito@mail.com",
-              },
+          type: "object",
+          required: ["email"],
+          properties: {
+            email: {
+              type: "string",
+              example: "menganito@mail.com",
             },
           },
+        },
         login: {
           type: "object",
           required: ["email", "password"],
@@ -149,6 +149,90 @@ const options = {
               type: "string",
               example: "675872346",
             },
+          },
+        },
+        merchant: {
+          type: "object",
+          required: ["name", "cif", "address", "city", "email", "phoneNumber"],
+          properties: {
+            name: {
+              type: "string",
+              example: "Merchant",
+            },
+            cif: {
+              type: "string",
+              example: "B-76345879",
+            },
+            address: {
+              type: "string",
+              example: "Sample Street, 6",
+            },
+            city: {
+              type: "string",
+              example: "Madrid, Madrid",
+            },
+            email: {
+              type: "string",
+              example: "merchant@mail.com",
+            },
+            phoneNumber: {
+              type: "string",
+              example: "675872346",
+            },
+          },
+        },
+        page: {
+          type: "object",
+          required: ["city", "location", "activity", "title", "summary"],
+          properties: {
+            city: {
+              type: "string",
+              example: "Madrid, Madrid",
+            },
+            location: {
+              type: "string",
+              example: "Sample Street, 6",
+            },
+            acitvity: {
+              type: "string",
+              example: "Concerts and Events",
+            },
+            title: {
+              type: "string",
+              example: "Title of you webpage",
+            },
+            summary: {
+              type: "string",
+              example: "Little description of the buissness",
+            },
+          },
+        },
+        texts: {
+          type: "object",
+          required: ["texts"],
+          properties: {
+            texts: {
+              type: "array",
+              example: [
+                "One text",
+                "Another text",
+                "etc",
+              ],
+            },
+          },
+        },
+        review: {
+          type: "object",
+          required: ["score", "review"],
+          properties: {
+            score: {
+              type: "float",
+              example: 4.5
+            },
+            review: {
+              type: "string",
+              example: "Your opinion on the buisness here"
+            }
           },
         },
       },

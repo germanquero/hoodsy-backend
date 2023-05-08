@@ -1,0 +1,249 @@
+@curent_user_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDUzOTlmZTVhYTA3NGQ2ZWRiMTQ1OWIiLCJpYXQiOjE2ODM0OTY0NTEsImV4cCI6MTY4MzUzOTY1MX0.qbhggSriNWt-1zmSleAMWTlElIogPONbOjJZMB0NNOs
+
+@admin_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDU0YWYwNjMwZjU4YzM4MjVkN2Y3ODkiLCJpYXQiOjE2ODMyNzE0MzB9.EiuEzonl8f6C8RGqnRzTsuukDBvi3ZgJVnh77GEqT_o
+
+@merchant_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDU4N2FhYzA2YTg4NmIwNTNhODZjMTkiLCJpYXQiOjE2ODM1MjA0MDR9.XYcDAHZXrRsus5_Fk8TuIiuiD1lMV_PX_gqB9bDZO2M
+
+###
+POST http://localhost:3000/login/signup HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "German Quero",
+  "email": "german.querojimenez@gmail.com",
+  "password": "1312PasswordGuapaGuapa",
+  "age": 23,
+  "city": "Madrid",
+  "interests": ["Bares y Restaurantes", "Tecnologia", "Conciertos", "Eventos"],
+  "allowsReceivingOffers": true
+}
+
+
+###
+POST http://localhost:3000/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "german.querojimenez@gmail.com",
+  "password": "1312PasswordGuapaGuapa5"
+}
+
+###
+POST http://localhost:3000/login/forgot-password HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "german.querojimenez@gmail.com"
+}
+
+
+###
+POST http://localhost:3000/login/forgot-password/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imdlcm1hbi5xdWVyb2ppbWVuZXpAZ21haWwuY29tIiwiY2hhbmdlIjoicnhkdGNmZzM0NTZ2aGJqbjQ1NiIsImlhdCI6MTY4MzI3NDM3NiwiZXhwIjoxNjgzMjc3OTc2fQ.-mbYHF5OUyVUMGErlhGuV3-LdVBJHkwP87JVQYMuSdQ HTTP/1.1
+Content-Type: application/json
+
+{
+  "password": "1312PasswordGuapaGuapa5"
+}
+
+
+
+
+
+###
+GET http://localhost:3000/account HTTP/1.1
+Authorization: Bearer {{curent_user_token}}
+
+###
+PUT http://localhost:3000/account HTTP/1.1
+Authorization: Bearer {{curent_user_token}}
+Content-Type: application/json
+
+{
+  "name": "Menganito",
+  "age": 20,
+  "city": "Madrid, Madrid",
+  "interests": [
+    "Fast food",
+    "Comedy Shows",
+    "Concerts"
+  ],
+  "allowsReceivingOffers": false
+}
+
+
+###
+POST http://localhost:3000/account/change-password HTTP/1.1
+Authorization: Bearer {{curent_user_token}}
+
+###
+POST http://localhost:3000/account/change-password/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDUzOTlmZTVhYTA3NGQ2ZWRiMTQ1OWIiLCJjaGFuZ2UiOiJyeGR0Y2ZnMzQ1NnZoYmpuNDU2IiwiaWF0IjoxNjgzNDk3MDI5LCJleHAiOjE2ODM1MDA2Mjl9.FknnG-_eACG1-EGm9JKe_udwtMkUYZDoT0gxePd7OL0 HTTP/1.1
+Authorization: Bearer {{curent_user_token}}
+Content-Type: application/json
+
+{
+  "password": "1312PasswordGuapaGuapa4"
+}
+
+###
+POST http://localhost:3000/account/change-email HTTP/1.1
+Authorization: Bearer {{curent_user_token}}
+Content-Type: application/json
+
+{
+  "email": "german.querojimenez@gmail.com",
+  "password": "1312PasswordGuapaGuapa5"
+}
+
+
+###
+DELETE http://localhost:3000/account HTTP/1.1
+Authorization: Bearer {{curent_user_token}}
+Content-Type: application/json
+
+{
+  "password": "1312PasswordGuapaGuapa4"
+}
+
+
+
+
+
+###
+POST http://localhost:3000/admins HTTP/1.1
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "name": "Hoodsy Admin 2",
+  "email": "admin2@hoodsy.com",
+  "phoneNumber": "675872346"
+}
+
+###
+GET http://localhost:3000/admins HTTP/1.1
+Authorization: Bearer {{admin_token}}
+
+
+###
+GET http://localhost:3000/admins/6454af0630f58c3825d7f789 HTTP/1.1
+Authorization: Bearer {{admin_token}}
+
+
+###
+PUT http://localhost:3000/admins/6454af60468f669720e711ea HTTP/1.1
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "name": "Hoodsy Admin 1",
+  "email": "admin1@hoodsy.com",
+  "phoneNumber": "675872346"
+}
+
+
+###
+DELETE http://localhost:3000/admins/6454af60468f669720e711ea HTTP/1.1
+Authorization: Bearer {{admin_token}}
+
+
+
+###
+POST http://localhost:3000/merchants HTTP/1.1
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "name": "El Bar de Paco",
+  "cif": "B-76345879",
+  "address": "Plaza de los Jardinillos, 6",
+  "city": "Majadahonda, Madrid",
+  "email": "elbardepaco@outlook.com",
+  "phoneNumber": "916375649"
+}
+
+###
+GET http://localhost:3000/merchants HTTP/1.1
+Authorization: Bearer {{admin_token}}
+
+
+###
+GET http://localhost:3000/merchants/account/64587aac06a886b053a86c19 HTTP/1.1
+Authorization: Bearer {{admin_token}}
+
+
+
+###
+PUT http://localhost:3000/merchants/6454b9843029d1ffa156882a HTTP/1.1
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "name": "El Bar de Djhan",
+  "cif": "B-76345879",
+  "address": "Plaza de los Jardinillos, 6",
+  "city": "Majadahonda, Madrid",
+  "email": "elbardepaco@outlook.com",
+  "phoneNumber": "916375649"
+}
+
+
+###
+POST http://localhost:3000/webpages/photos HTTP/1.1
+Authorization: Bearer {{merchant_token}}
+Content-Type: multipart/form-data; boundary=Boundry
+
+--Boundry
+Content-Disposition: form-data; name="image"; filename="img.png"
+Content-Type: image/png
+
+< ./test_image.png
+--Boundry--
+
+
+
+###
+POST http://localhost:3000/webpages/texts HTTP/1.1
+Authorization: Bearer {{merchant_token}}
+Content-Type: application/json
+
+{
+  "texts": [
+    "Comida Espanola",
+    "Comida Asiatica",
+    "Comida fustion asiatico-espanola",
+    "Bar, restaurante, cocteleria"
+  ]
+}
+
+###
+DELETE http://localhost:3000/webpages/photos/page-photo-1683412321401.png HTTP/1.1
+Authorization: Bearer {{merchant_token}}
+
+
+###
+GET http://localhost:3000/users/offers HTTP/1,1
+Authorization: Bearer {{merchant_token}}
+
+
+
+
+###
+GET http://localhost:3000/webpages HTTP/1.1
+
+###
+POST http://localhost:3000/webpages/review/6454b9843029d1ffa1568828 HTTP/1.1
+Authorization: Bearer {{curent_user_token}}
+Content-Type: application/json
+
+{
+  "score": 4.95,
+  "review": "buena comida y servicio inmejorable"
+}
+
+###
+DELETE http://localhost:3000/webpages/review/6454b9843029d1ffa1568828 HTTP/1.1
+Authorization: Bearer {{curent_user_token}}
+
+
+###
+GET http://localhost:3000/users/ HTTP/1.1

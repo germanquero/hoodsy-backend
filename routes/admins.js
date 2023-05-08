@@ -26,7 +26,7 @@ const { adminsAuthMiddleware } = require("../middleware/authMiddleware");
  *      responses:
  *          '200':
  *              description: Creates admin, returns token
- *          '401':
+ *          '403':
  *              description: Validation error
  *          '500':
  *              description: Server error
@@ -67,7 +67,7 @@ router.get("/", adminsAuthMiddleware, getAdmins);
  *              description: Id that represents the admin
  *              required: true
  *              schema:
- *                  type: ID
+ *                  type: string
  *                  example: 2365af3636h38g3345d7k467
  *      responses:
  *          '200':
@@ -93,7 +93,7 @@ router.get("/:id", adminsAuthMiddleware, getAdmin);
  *              description: Id that represents the admin
  *              required: true
  *              schema:
- *                  type: ID
+ *                  type: string
  *                  example: 2365af3636h38g3345d7k467
  *      requestBody:
  *          content:
@@ -103,7 +103,7 @@ router.get("/:id", adminsAuthMiddleware, getAdmin);
  *      responses:
  *          '200':
  *              description: Edits admin and returns OK
- *          '401':
+ *          '403':
  *              description: Validation error
  *          '500':
  *              description: Server error
@@ -126,7 +126,7 @@ router.put("/:id", adminsAuthMiddleware, validatorAdmin, editAdmin);
  *              description: Id that represents the admin
  *              required: true
  *              schema:
- *                  type: ID
+ *                  type: string
  *                  example: 2365af3636h38g3345d7k467
  *      responses:
  *          '200':

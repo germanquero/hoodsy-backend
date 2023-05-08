@@ -29,7 +29,7 @@ const router = express.Router();
  *      responses:
  *          '200':
  *              description: Edits account, returns OK
- *          '401':
+ *          '403':
  *              description: Validation error
  *          '500':
  *              description: Server error
@@ -58,7 +58,7 @@ router.post(
  *      responses:
  *          '200':
  *              description: Returns token
- *          '401':
+ *          '403':
  *              description: Validation error
  *          '500':
  *              description: Server error
@@ -81,7 +81,7 @@ router.post("/", validatorEmail, validatorPassword, loginUser);
  *      responses:
  *          '200':
  *              description: Returns temporary link
- *          '401':
+ *          '403':
  *              description: Validation error
  *          '500':
  *              description: Server error
@@ -102,7 +102,7 @@ router.post("/forgot-password", validatorEmail, forgotPassword);
  *              description: 1h long token generated for the link to be temporary
  *              required: true
  *              schema:
- *                  type: JWT token
+ *                  type: string
  *      requestBody:
  *          content:
  *              application/json:
@@ -111,7 +111,7 @@ router.post("/forgot-password", validatorEmail, forgotPassword);
  *      responses:
  *          '200':
  *              description: Chagens password, returns OK
- *          '401':
+ *          '403':
  *              description: Validation error
  *          '500':
  *              description: Server error

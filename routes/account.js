@@ -49,7 +49,7 @@ router.get("/", usersAuthMiddleware, getAccount);
  *      responses:
  *          '200':
  *              description: Edits account, returns OK
- *          '401':
+ *          '403':
  *              description: Validation error
  *          '500':
  *              description: Server error
@@ -74,7 +74,7 @@ router.put("/", usersAuthMiddleware, validatorInfo, editAccount);
  *      responses:
  *          '200':
  *              description: Deletes account, returns OK
- *          '401':
+ *          '403':
  *              description: Validation error
  *          '500':
  *              description: Server error
@@ -115,7 +115,7 @@ router.post("/change-password", usersAuthMiddleware, verifyPasswordChange);
  *              description: 1h long token generated for the link to be temporary
  *              required: true
  *              schema:
- *                  type: JWT token
+ *                  type: string
  *      requestBody:
  *          content:
  *              application/json:
@@ -124,7 +124,7 @@ router.post("/change-password", usersAuthMiddleware, verifyPasswordChange);
  *      responses:
  *          '200':
  *              description: Chagens password, returns OK
- *          '401':
+ *          '403':
  *              description: Validation error
  *          '500':
  *              description: Server error
@@ -154,7 +154,7 @@ router.post(
  *      responses:
  *          '200':
  *              description: Chagens email, returns OK
- *          '401':
+ *          '403':
  *              description: Validation error
  *          '500':
  *              description: Server error

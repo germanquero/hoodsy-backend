@@ -116,6 +116,7 @@ const getPages = async (req, res) => {
     const activity = req.query.activity;
     const scoring = req.query.scoring;
     const filter = {};
+    filter.published = true;
     if (id) {
       filter._id = id;
     }
@@ -161,13 +162,17 @@ const postReview = async (req, res) => {
       review: body.review,
     };
     const page = await pageModel.findById(id);
+    if(page.published == false){
+      throw new Error("Not published");
+    }
     let reviewsArray = page.reviews.filter(
       (review) => review.user_id != user.id
     );
     reviewsArray = [...reviewsArray, user_review];
     const numReviews = reviewsArray.length;
     let scoring = 0;
-    reviewsArray.forEach((review)=> scoring=+review.score);
+    reviewsArray.forEach((review)=> scoring+=review.score);
+    scoring = scoring / numReviews;
     await pageModel.findByIdAndUpdate(id, { reviews: reviewsArray, scoring: scoring, numReviews: numReviews });
     res.send("OK");
   } catch (err) {
@@ -181,12 +186,16 @@ const deleteReview = async (req, res) => {
     const id = req.params.id;
     const user = req.user;
     const page = await pageModel.findById(id);
+    if(page.published == false){
+      throw new Error("Not published");
+    }
     const reviewsArray = page.reviews.filter(
       (review) => review.user_id != user.id
     );
     const numReviews = reviewsArray.length;
     let scoring = 0;
-    reviewsArray.forEach((review)=> scoring=+review.score);
+    reviewsArray.forEach((review)=> scoring+=review.score);
+    scoring = scoring / numReviews;
     await pageModel.findByIdAndUpdate(id, { reviews: reviewsArray, scoring: scoring, numReviews: numReviews });
     res.send("OK");
   } catch (err) {
