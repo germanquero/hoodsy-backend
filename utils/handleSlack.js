@@ -1,6 +1,6 @@
 const { IncomingWebhook } = require('@slack/webhook');
 
-const webhook = new IncomingWebhook('https://hooks.slack.com/services/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'); // Reemplaza TOKEN y ID con tu información
+const webhook = new IncomingWebhook(process.env.SLACK_WH);
 
 function sendSlackNotification(error) {
     const message = {
@@ -14,7 +14,7 @@ function sendSlackNotification(error) {
         console.log('Message sent to Slack');
       })
       .catch((error) => {
-        console.error('Error sending message to Slack:', error);
+        console.log('Error sending message to Slack:', error);
       });
   }
   
